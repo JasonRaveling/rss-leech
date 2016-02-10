@@ -1,0 +1,1 @@
+If you're thinking of adding your own. Be sure to name your widget class `RSS_Leech_[A-Z]{1}*.php` (e.g. RSS_Leech_My_Very_Own_Widget). So basically, always have the leading `RSS_Leech_` followed by your name with a capitol letter for each word that follows. Then name your file the name of the widget without the leading `RSS_Leech_` (e.g. My_very_Own_Widget.php).
