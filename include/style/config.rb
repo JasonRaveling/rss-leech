@@ -2,8 +2,10 @@
 http_path = "./"
 css_dir = "css"
 sass_dir = "scss"
-images_dir = "images"
-javascripts_dir = "javascripts"
+
+# if you want to use images, create a sub dir in the same dir as this file
+# called `images` and then you can use `url('filename');` to link to it.
+# images_dir = "images"
 
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed

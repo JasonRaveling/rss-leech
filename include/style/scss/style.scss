@@ -1,8 +1,15 @@
+/* Keeping it as simple as possible. */
+
 .rss-leech-list {
   margin: auto;
   padding: 0;
   width: 100%;
   list-style-type: none;
+
+  li {
+    margin: 0.3em 0;
+    line-height: 0.9em;
+  }
 }
 
 .rss-leech-link {}
@@ -11,7 +18,14 @@
   float: left;
   vertical-align: middle;
   margin: auto 10px auto 0;
-  width: 110px;
+  width: 100px;
 }
 
-.rss-leech-headline {}
+.rss-leech-headline {
+  font-weight: bold;
+}
+
+.rss-leech-clearfix {
+  clear: both;
+  display: block;
+}

@@ -3,7 +3,7 @@
 Plugin Name:  RSS Leech
 Description:  Grabs content from selected RSS feeds and places them in a widget for the sidebar.
 Plugin URI:   https://github.com/webunraveling/wp-pbs-rss-widgets
-Version:      0.1
+Version:      1.0
 Author:       Jason Raveling
 Author URI:   http://webunraveling.com
 License:      GPL2
@@ -25,16 +25,16 @@ function register_css() {
     'rss-leech',
     plugins_url( '/rss-leech/include/style/css/style.css' ),
     array(),
-    date('Ymd', filemtime(plugins_url( '/rss-leech/include/style/css/style.css' )) )
+    date( 'Ymd', filemtime(dirname(__FILE__) . '/include/style/css/style.css') )
   );
 	wp_enqueue_style( 'rss-leech' );
 }
 
 // include rss parsing
-include_once plugins_url( '/rss-leech/include/rss-parser.php' );
+include_once dirname(__FILE__) . '/include/rss-parser.php';
 
 // Do the work
-$widgetFiles = glob( plugins_url("/widgets/*.php") );
+$widgetFiles = glob( dirname(__FILE__) . "/widgets/*.php" );
 
 foreach ($widgetFiles as $file) {
   include $file;

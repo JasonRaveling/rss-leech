@@ -39,14 +39,14 @@ class RSS_Leech_Newshour extends WP_Widget {
 		$limit = 5;
 		$items = $rss->getItems();
 
+		echo '<ul class="rss-leech-list">';
 		for($x=0; $x < $limit; $x++) {
-			echo '<ul class="rss-leech-list">';
-			echo '<a class="rss-leech-link" target="_blank" href="' . $items[$x]->getLink() .'"><li>';
+			echo '<a class="rss-leech-link rss-leech-clearfix" target="_blank" href="' . $items[$x]->getLink() .'"><li>';
 			echo '<img class="rss-leech-img" src="' . $items[$x]->getImage() . '" />';
 			echo '<span class="rss-leech-headline">' . $items[$x]->getTitle() . '</span>';
 			echo '</li></a>';
-			echo '</ul>';
 		}
+		echo '</ul>';
 
 		echo $args['after_widget'];
 	}
