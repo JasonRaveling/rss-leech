@@ -1,2 +1,2 @@
 # RSS Leech
-Add widgets to WordPress that grab RSS feeds containing PBS content.
+A WordPress plugin that adds widgets that grab RSS feeds from the feed URL.
