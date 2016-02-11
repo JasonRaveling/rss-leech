@@ -1,3 +1,2 @@
 error_log
-.sass_cache
-
+*.sass-cache*
