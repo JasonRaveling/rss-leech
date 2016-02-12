@@ -42,7 +42,8 @@ class RSS_Leech_Newshour extends WP_Widget {
 		echo '<ul class="rss-leech-list">';
 		for($x=0; $x < $limit; $x++) {
 			echo '<a class="rss-leech-link rss-leech-clearfix" target="_blank" href="' . $items[$x]->getLink() .'"><li>';
-			echo '<img class="rss-leech-img" src="' . $items[$x]->getImage() . '" />';
+			echo '<div class="rss-leech-img" style="background-image: url(\'' . $items[$x]->getImage() . '\');">';
+			echo '</div>';
 			echo '<span class="rss-leech-headline">' . $items[$x]->getTitle() . '</span>';
 			echo '</li></a>';
 		}

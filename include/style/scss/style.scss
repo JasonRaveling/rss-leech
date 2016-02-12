@@ -18,7 +18,11 @@
   float: left;
   vertical-align: middle;
   margin: auto 10px auto 0;
+  height: 60px;
   width: 100px;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .rss-leech-headline {
