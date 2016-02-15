@@ -31,9 +31,9 @@ become more complicated.
 */
 
 // get the stylesheet
-add_action( 'wp_enqueue_scripts', 'register_css' );
+add_action( 'wp_enqueue_scripts', 'register_rss_leech_css' );
 
-function register_css() {
+function register_rss_leech_css() {
 	wp_register_style(
     'rss-leech',
     plugins_url( '/rss-leech/include/style/css/rss-leech-style.css' ),
