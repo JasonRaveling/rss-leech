@@ -33,15 +33,12 @@ become more complicated.
 // get the stylesheet
 add_action( 'wp_enqueue_scripts', 'register_css' );
 
-/**
- * Register style sheet.
- */
 function register_css() {
 	wp_register_style(
     'rss-leech',
-    plugins_url( '/rss-leech/include/style/css/style.css' ),
+    plugins_url( '/rss-leech/include/style/css/rss-leech-style.css' ),
     array(),
-    date( 'Ymd', filemtime(dirname(__FILE__) . '/include/style/css/style.css') )
+    date( 'Ymd', filemtime(dirname(__FILE__) . '/include/style/css/rss-leech-style.css') )
   );
 	wp_enqueue_style( 'rss-leech' );
 }

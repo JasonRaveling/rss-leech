@@ -8,11 +8,18 @@
 
   li {
     margin: 0.3em 0;
-    line-height: 0.9em;
   }
 }
 
-.rss-leech-link {}
+.rss-leech-link {
+
+  &:hover {
+
+    .rss-leech-img {
+      opacity: 0.9;
+    }
+  }
+}
 
 .rss-leech-img {
   float: left;
