@@ -5,7 +5,6 @@
  * Added functionality for getting thumbnails from the RSS feed.
  */
 
-
 class RSSItem {
    //(String) title RSS item
    protected $title;
