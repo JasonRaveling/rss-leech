@@ -1,4 +1,11 @@
 <?php
+/*
+ * This is a slightly modified version of the code found at https://github.com/thinkphp/RSSParser
+ *
+ * Added functionality for getting thumbnails from the RSS feed.
+ */
+
+
 class RSSItem {
    //(String) title RSS item
    protected $title;
