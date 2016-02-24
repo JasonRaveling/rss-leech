@@ -30,14 +30,18 @@ class RSS_Leech_Newshour extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		echo $args['before_widget'];
+
 		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
 		}
 
+    if ( ! empty($instance['headline-limit']) ) {
+      $headline_limit = $instance['headline-limit'];
+    }
+
 		// cache this - we're hammering the remote server
 		// at each page render otherwise, angering it
 		$html = file_get_contents( "http://www.pbs.org/newshour/topic/nation/feed/" );
-		$limit = 5;
 
 		$headlines = lptv_parsexpath( $html, "//item//title" );
 		$thumbnails = lptv_parsexpath( $html, "//img//@src" );
@@ -46,7 +50,7 @@ class RSS_Leech_Newshour extends WP_Widget {
 		?>
 		<ul class="rss-leech-list">
 		  <?php
-		  for($x=0; $x <= $limit; $x++) { ?>
+		  for($x=0; $x < $headline_limit; ++$x) { ?>
 		    <a class="rss-leech-link rss-leech-clearfix" target="_blank" href="<?php echo $links[$x]; ?>"><li>
 		      <div class="rss-leech-img" style="background-image: url('<?php echo $thumbnails[$x]; ?>')">
 		      </div>
@@ -68,17 +72,24 @@ class RSS_Leech_Newshour extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'PBS Newshour', 'rss_leech' );
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'RSS Leech', 'rss_leech' );
+    $headline_limit = ! empty( $instance['headline-limit'] ) ? $instance['headline-limit'] : '';
 		?>
+
 		<p>
 		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 
-		<?php // Coming soon
-		/*<label for="<?php echo $this->get_field_id( 'feed-url' ); ?>"><?php _e( 'Feed URL:' ); ?></label>
-		<input class="widefat" id="<?php echo $this->get_field_id( 'feed-url' ); ?>" name="<?php echo $this->get_field_name( 'feed-url' ); ?>" type="text" value="<?php echo esc_attr( $feed ); ?>">
-		*/?>
+    <label for="<?php echo $this->get_field_id( 'headline-limit' ); ?>"><?php _e( 'Number of Headlines:' ); ?></label>
+		<select id="<?php echo $this->get_field_id( 'headline-limit' ); ?>" name="<?php echo $this->get_field_name( 'headline-limit' ); ?>">
+      <?php
+      for ( $x = 1; $x <= 20; ++$x ) {
+        echo "<option value='$x' " . selected( $instance['headline-limit'], $x, false ) . ">$x</option>";
+      }
+      ?>
+    </select>
 		</p>
+
 		<?php
 	}
 
@@ -94,7 +105,12 @@ class RSS_Leech_Newshour extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
-		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['title'] = ( ! empty($new_instance['title']) ) ? strip_tags( $new_instance['title'] ) : '';
+    $instance['headline-limit'] = ( ! empty($new_instance['headline-limit']) ) ? strip_tags( $new_instance['headline-limit'] ) : '';
+
+    if ( $instance['headline-limit'] < 1 || 20 < $instance['headline-limit'] ) {
+      $instance['headline-limit'] = 5;
+    }
 
 		return $instance;
 	}

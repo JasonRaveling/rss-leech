@@ -44,7 +44,7 @@ function register_rss_leech_css() {
 }
 
 // include rss parsing
-include_once dirname(__FILE__) . '/include/new-parser.php';
+include_once dirname(__FILE__) . '/include/rss-parser.php';
 
 // Do the work
 $widgetFiles = glob( dirname(__FILE__) . "/widgets/*.php" );
