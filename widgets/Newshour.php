@@ -34,20 +34,28 @@ class RSS_Leech_Newshour extends WP_Widget {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
 		}
 
-		$rss = new RSSParser();
-		$rss->load('http://www.pbs.org/newshour/topic/nation/feed/');
+		// cache this - we're hammering the remote server
+		// at each page render otherwise, angering it
+		$html = file_get_contents( "http://www.pbs.org/newshour/topic/nation/feed/" );
 		$limit = 5;
-		$items = $rss->getItems();
 
-		echo '<ul class="rss-leech-list">';
-		for($x=0; $x < $limit; $x++) {
-			echo '<a class="rss-leech-link rss-leech-clearfix" target="_blank" href="' . $items[$x]->getLink() .'"><li>';
-			echo '<div class="rss-leech-img" style="background-image: url(\'' . $items[$x]->getImage() . '\');">';
-			echo '</div>';
-			echo '<span class="rss-leech-headline">' . $items[$x]->getTitle() . '</span>';
-			echo '</li></a>';
-		}
-		echo '</ul>';
+		$headlines = lptv_parsexpath( $html, "//item//title" );
+		$thumbnails = lptv_parsexpath( $html, "//img//@src" );
+		$links = lptv_parsexpath( $html, "//item//guid" );
+
+		?>
+		<ul class="rss-leech-list">
+		  <?php
+		  for($x=0; $x <= $limit; $x++) { ?>
+		    <a class="rss-leech-link rss-leech-clearfix" target="_blank" href="<?php echo $links[$x]; ?>"><li>
+		      <div class="rss-leech-img" style="background-image: url('<?php echo $thumbnails[$x]; ?>')">
+		      </div>
+		      <span class="rss-leech-headline"><?php echo htmlspecialchars($headlines[$x], ENT_SUBSTITUTE); ?></span>
+		    </li>
+		  </a>
+		  <?php } ?>
+		</ul>
+		<?php
 
 		echo $args['after_widget'];
 	}
@@ -65,6 +73,11 @@ class RSS_Leech_Newshour extends WP_Widget {
 		<p>
 		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+
+		<?php // Coming soon
+		/*<label for="<?php echo $this->get_field_id( 'feed-url' ); ?>"><?php _e( 'Feed URL:' ); ?></label>
+		<input class="widefat" id="<?php echo $this->get_field_id( 'feed-url' ); ?>" name="<?php echo $this->get_field_name( 'feed-url' ); ?>" type="text" value="<?php echo esc_attr( $feed ); ?>">
+		*/?>
 		</p>
 		<?php
 	}
