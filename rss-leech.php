@@ -24,12 +24,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 */
 
-/*
-Not much happening here. Setting up this file structure to allow for future
-functionality to be added without having to change file structure when/if things
-become more complicated.
-*/
-
 // get the stylesheet
 add_action( 'wp_enqueue_scripts', 'register_rss_leech_css' );
 
@@ -43,10 +37,11 @@ function register_rss_leech_css() {
 	wp_enqueue_style( 'rss-leech' );
 }
 
-// include rss parsing
+// include our functions
 include_once dirname(__FILE__) . '/include/rss-parser.php';
+include_once dirname(__FILE__) . '/include/rss-cacher.php';
 
-// Do the work
+// get the widgets
 $widgetFiles = glob( dirname(__FILE__) . "/widgets/*.php" );
 
 foreach ($widgetFiles as $file) {

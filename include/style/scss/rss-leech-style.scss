@@ -12,6 +12,8 @@
 }
 
 .rss-leech-link {
+  clear: both;
+  display: block;
 
   &:hover {
 
@@ -34,9 +36,4 @@
 
 .rss-leech-headline {
   font-weight: bold;
-}
-
-.rss-leech-clearfix {
-  clear: both;
-  display: block;
 }

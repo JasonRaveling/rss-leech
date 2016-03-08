@@ -39,10 +39,9 @@ class RSS_Leech_Newshour extends WP_Widget {
       $headline_limit = $instance['headline-limit'];
     }
 
-		// cache this - we're hammering the remote server
-		// at each page render otherwise, angering it
-		$html = file_get_contents( "http://www.pbs.org/newshour/topic/nation/feed/" );
+		$html = rss_cacher( 'http://www.pbs.org/newshour/topic/nation/feed/', $args['widget_name'] );
 
+		// These items may be different depending on the RSS feed
 		$headlines = lptv_parsexpath( $html, "//item//title" );
 		$thumbnails = lptv_parsexpath( $html, "//img//@src" );
 		$links = lptv_parsexpath( $html, "//item//guid" );
@@ -51,12 +50,13 @@ class RSS_Leech_Newshour extends WP_Widget {
 		<ul class="rss-leech-list">
 		  <?php
 		  for($x=0; $x < $headline_limit; ++$x) { ?>
-		    <a class="rss-leech-link rss-leech-clearfix" target="_blank" href="<?php echo $links[$x]; ?>"><li>
-		      <div class="rss-leech-img" style="background-image: url('<?php echo $thumbnails[$x]; ?>')">
-		      </div>
-		      <span class="rss-leech-headline"><?php echo htmlspecialchars($headlines[$x], ENT_SUBSTITUTE); ?></span>
-		    </li>
-		  </a>
+		    <a class="rss-leech-link" target="_blank" href="<?php echo $links[$x]; ?>">
+					<li>
+						<div class="rss-leech-img" style="background-image: url('<?php echo $thumbnails[$x]; ?>')">
+						</div>
+						<span class="rss-leech-headline"><?php echo htmlspecialchars($headlines[$x], ENT_SUBSTITUTE); ?></span>
+					</li>
+				</a>
 		  <?php } ?>
 		</ul>
 		<?php
