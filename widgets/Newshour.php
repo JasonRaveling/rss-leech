@@ -39,7 +39,7 @@ class RSS_Leech_Newshour extends WP_Widget {
       $headline_limit = $instance['headline-limit'];
     }
 
-		$html = rss_cacher( 'http://www.pbs.org/newshour/topic/nation/feed/', $args['widget_name'], $headline_limit );
+		$html = rss_cacher( 'http://www.pbs.org/newshour/topic/nation/feed/', $args['widget_name'], $headline_limit, 3600);
 
 		// These items may be different depending on the RSS feed
 		$headlines = rssleech_parsexpath( $html, "//item//title" );
