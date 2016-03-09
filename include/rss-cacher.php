@@ -9,16 +9,19 @@
  *
  */
 
-function rss_cacher( $source, $feedName, $items = array(), $cacheTime = 2700 ) {
+function rss_cacher( $feedURL, $feedName, $limit, $cacheTime = 2700 ) {
 
-  if ( ! $source ) {
+  $cacheDir = dirname( dirname(__FILE__) )  . '/cache';
+
+  if ( ! $feedURL ) {
     return 'error: rss_cacher() expects at least two arguments. No RSS source URL provided or the URL does not exist.';
   }
 
   if ( ! $feedName ) {
     return 'error: rss_cacher() expects at least two arguments. No widget name provided.';
   } else {
-    $cacheFile =  dirname(dirname(__FILE__)) . '/cache/' . str_replace(' ', '_', $feedName) . '-feed.txt';
+    $feedName = str_replace(' ', '_', $feedName);
+    $cacheFile =  $cacheDir . '/' . $feedName . '.txt';
   }
 
   if ( ! is_numeric($cacheTime) ) {
@@ -27,15 +30,28 @@ function rss_cacher( $source, $feedName, $items = array(), $cacheTime = 2700 ) {
 
   if ( ! file_exists($cacheFile) || filemtime($cacheFile) < (time() - $cacheTime) ) {
 
-    echo "GRABBING CACHE";
-    if (file_exists($cacheFile) ) {
+    if ( file_exists($cacheFile) ) {
       unlink( $cacheFile );
     }
 
-    $feed = file_get_contents( $source );
+    $feed = file_get_contents( $feedURL );
 
-    // any url to an image
-    //preg_replace('/(src=")([^\s]+\/\/[^\/]+.\/[^\s]+\.(jpg|jpeg|png|gif|bmp))(")/gi', md5(//headline) $feed)
+    // match any image URL
+    preg_match_all('/([http|s]+:\/\/[^\/]+.\/[^\s]+\.(jpg|jpeg|png|gif|bmp))/', $feed, $imgMatches);
+
+    for ($x = 0; $x <= $limit; $x++) {
+
+      $src = $imgMatches[0][$x];
+
+      $cacheImg = $feedName . md5($src) . '.' . pathinfo($src, PATHINFO_EXTENSION);
+      $localImg = $cacheDir . '/' . $cacheImg;
+      $httpImg = plugins_url('/rss-leech/cache/') . $cacheImg;
+
+      file_put_contents($localImg, file_get_contents($src));
+
+      $feed = str_replace($src, $httpImg, $feed);
+
+    }
 
     $openFile = fopen( $cacheFile, 'w' );
     fwrite( $openFile, $feed );
