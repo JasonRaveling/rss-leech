@@ -4,7 +4,7 @@
  * Give credit in file product
  */
 
- function lptv_parsexpath($html, $query) {
+ function rssleech_parsexpath($html, $query) {
      $doc = new DOMDocument();
      @$doc->loadHTML($html);
      @$xpath = new DOMXPath($doc);

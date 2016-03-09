@@ -42,9 +42,9 @@ class RSS_Leech_Newshour extends WP_Widget {
 		$html = rss_cacher( 'http://www.pbs.org/newshour/topic/nation/feed/', $args['widget_name'] );
 
 		// These items may be different depending on the RSS feed
-		$headlines = lptv_parsexpath( $html, "//item//title" );
-		$thumbnails = lptv_parsexpath( $html, "//img//@src" );
-		$links = lptv_parsexpath( $html, "//item//guid" );
+		$headlines = rssleech_parsexpath( $html, "//item//title" );
+		$thumbnails = rssleech_parsexpath( $html, "//img//@src" );
+		$links = rssleech_parsexpath( $html, "//item//guid" );
 
 		?>
 		<ul class="rss-leech-list">
@@ -52,9 +52,8 @@ class RSS_Leech_Newshour extends WP_Widget {
 		  for($x=0; $x < $headline_limit; ++$x) { ?>
 		    <a class="rss-leech-link" target="_blank" href="<?php echo $links[$x]; ?>">
 					<li>
-						<div class="rss-leech-img" style="background-image: url('<?php echo $thumbnails[$x]; ?>')">
-						</div>
-						<span class="rss-leech-headline"><?php echo htmlspecialchars($headlines[$x], ENT_SUBSTITUTE); ?></span>
+						<div class="rss-leech-img" style="background-image: url('<?php echo $thumbnails[$x]; ?>')"></div>
+						<span class="rss-leech-headline"><?php echo htmlspecialchars($headlines[$x], ENT_QUOTES | ENT_HTML5); ?></span>
 					</li>
 				</a>
 		  <?php } ?>
