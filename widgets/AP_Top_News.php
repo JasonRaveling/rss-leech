@@ -52,7 +52,13 @@ class RSS_Leech_AP_Top_News extends WP_Widget {
 		  for($x=0; $x < $headline_limit; ++$x) { ?>
 		    <a class="rss-leech-link" target="_blank" href="<?php echo $links[$x]; ?>">
 					<li>
-						<div class="rss-leech-img" style="background-image: url('<?php echo ( $thumbnails[$x] ? $thumbnails[$x] : 'B' ); ?>')"></div>
+						<?php
+						if ( $thumbnails[$x] ) {
+						?>
+						<div class="rss-leech-img" style="background-image: url('<?php echo $thumbnails[$x]; ?>')"></div>
+						<?php
+						}
+						?>
 						<span class="rss-leech-headline"><?php echo htmlspecialchars($headlines[$x], ENT_QUOTES | ENT_HTML5); ?></span>
 					</li>
 				</a>
