@@ -1,22 +1,22 @@
 <?php
-// PBS Newshour
+// AP Top News
 // Dont forget to change the function name and title
 
-add_action( 'widgets_init', 'rssleech_newshour_register' );
-function rssleech_newshour_register() {
-	register_widget( "RSS_Leech_Newshour" );
+add_action( 'widgets_init', 'rssleech_ap_top_news_register' );
+function rssleech_ap_top_news_register() {
+	register_widget( "RSS_Leech_AP_Top_News" );
 }
 
-class RSS_Leech_Newshour extends WP_Widget {
+class RSS_Leech_AP_Top_News extends WP_Widget {
 	/**
 	 * Register widget with WordPress.
 	 */
 	function __construct() {
 
 		parent::__construct(
-			'pbs_leech_newshour', // Base ID
-			__( "Leech PBS Newshour", 'rss_leech' ), // Name
-			array( 'description' => __( "Grab PBS Newshour feed.", 'rss_leech' ), ) // Args
+			'pbs_leech_ap_top_news', // Base ID
+			__( "RSS Leech AP Top News", 'rss_leech' ), // Name
+			array( 'description' => __( "Grab AP Top News headline feed.", 'rss_leech' ), ) // Args
 		);
 	}
 
@@ -39,12 +39,12 @@ class RSS_Leech_Newshour extends WP_Widget {
       $headline_limit = $instance['headline-limit'];
     }
 
-		$html = rss_cacher( 'http://www.pbs.org/newshour/topic/nation/feed/', $args['widget_name'], $headline_limit, 3600);
+		$html = rss_cacher( 'http://hosted.ap.org/lineups/TOPHEADS.rss?SITE=AP&SECTION=HOME', $args['widget_name'], $headline_limit, 3600);
 
 		// These items may be different depending on the RSS feed
 		$headlines = rssleech_parsexpath( $html, "//item//title" );
 		$thumbnails = rssleech_parsexpath( $html, "//img//@src" );
-		$links = rssleech_parsexpath( $html, "//item//guid" );
+		$links = rssleech_parsexpath( $html, "//item//link" );
 
 		?>
 		<ul class="rss-leech-list">
@@ -52,7 +52,7 @@ class RSS_Leech_Newshour extends WP_Widget {
 		  for($x=0; $x < $headline_limit; ++$x) { ?>
 		    <a class="rss-leech-link" target="_blank" href="<?php echo $links[$x]; ?>">
 					<li>
-						<div class="rss-leech-img" style="background-image: url('<?php echo $thumbnails[$x]; ?>')"></div>
+						<div class="rss-leech-img" style="background-image: url('<?php echo ( $thumbnails[$x] ? $thumbnails[$x] : 'B' ); ?>')"></div>
 						<span class="rss-leech-headline"><?php echo htmlspecialchars($headlines[$x], ENT_QUOTES | ENT_HTML5); ?></span>
 					</li>
 				</a>
