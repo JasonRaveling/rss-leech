@@ -28,9 +28,9 @@ function rss_cacher( $feedURL, $feedName, $limit, $cacheTime = 2700 ) {
     return 'error: rss_cacher expects cacheTime to be integer.';
   }
 
-  if ( ! file_exists($cacheFile) || filemtime($cacheFile) < (time() - $cacheTime) ) {
+  if ( !file_exists($cacheFile) || filemtime($cacheFile) < (time() - $cacheTime) ) {
 
-    if ( file_exists($cacheFile) ) {
+    if ( file_exists($cacheFile) && is_file($cacheFile) ) {
       unlink( $cacheFile );
     }
 
@@ -41,15 +41,19 @@ function rss_cacher( $feedURL, $feedName, $limit, $cacheTime = 2700 ) {
 
     for ($x = 0; $x <= $limit; $x++) {
 
-      $src = $imgMatches[0][$x];
+      if ( $imgMatches[0][$x] ) {
 
-      $cacheImg = $feedName . md5($src) . '.' . pathinfo($src, PATHINFO_EXTENSION);
-      $localImg = $cacheDir . '/' . $cacheImg;
-      $httpImg = plugins_url('/rss-leech/cache/') . $cacheImg;
+        $src = $imgMatches[0][$x];
 
-      file_put_contents($localImg, file_get_contents($src));
+        $cacheImg = $feedName . md5($src) . '.' . pathinfo($src, PATHINFO_EXTENSION);
+        $localImg = $cacheDir . '/' . $cacheImg;
+        $httpImg = plugins_url('/rss-leech/cache/') . $cacheImg;
 
-      $feed = str_replace($src, $httpImg, $feed);
+        @file_put_contents( $localImg, file_get_contents($src) );
+
+        $feed = str_replace($src, $httpImg, $feed);
+
+      }
 
     }
 
