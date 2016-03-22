@@ -1,7 +1,7 @@
 <?php
 /*
  * Post result to https://www.reddit.com/r/PHPhelp/comments/4630th/parse_rss_feed_domdocumentload_cdata_errors/
- * Give credit in file product
+ * Give credit in final product
  */
 
  function rssleech_parsexpath($html, $query) {

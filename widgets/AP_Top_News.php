@@ -41,10 +41,13 @@ class RSS_Leech_AP_Top_News extends WP_Widget {
 
 		$html = rss_cacher( 'http://hosted.ap.org/lineups/TOPHEADS.rss?SITE=AP&SECTION=HOME', $args['widget_name'], $headline_limit, 3600);
 
+		$linkTags = array('<link>', '</link>');
+		$guidTags = array('<guid>', '</guid>');
+		$html = str_replace( $linkTags, $guidTags, $html );
+
 		// These items may be different depending on the RSS feed
 		$headlines = rssleech_parsexpath( $html, "//item//title" );
-		$thumbnails = rssleech_parsexpath( $html, "//img//@src" );
-		$links = rssleech_parsexpath( $html, "//item//link" );
+		$links = rssleech_parsexpath( $html, "//item//guid" );
 
 		?>
 		<ul class="rss-leech-list">
