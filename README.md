@@ -10,3 +10,4 @@ This plugin was made to be as simple as possible. Features will be added as the 
 * Automate cache cleanup
 * Look for a simple way to add caching / cache cleanup to a cronjob
 * Resize images
+* Fix `//item//link` parsing.
