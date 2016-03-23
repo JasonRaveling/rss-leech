@@ -28,7 +28,7 @@ function rss_cacher( $feedURL, $feedName, $limit, $cacheTime = 2700 ) {
     return 'error: rss_cacher expects cacheTime to be integer.';
   }
 
-  if ( !file_exists($cacheFile) || filemtime($cacheFile) < (time() - $cacheTime) ) {
+  if ( !file_exists($cacheFile) || filesize($cacheFile) <= 1  || filemtime($cacheFile) < (time() - $cacheTime) ) {
 
     if ( file_exists($cacheFile) && is_file($cacheFile) ) {
       unlink( $cacheFile );
