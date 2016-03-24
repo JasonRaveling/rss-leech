@@ -3,7 +3,7 @@
 Plugin Name:  RSS Leech
 Description:  Grabs content from selected RSS feeds and places them in a widget for the sidebar.
 Plugin URI:   https://github.com/webunraveling/wp-pbs-rss-widgets
-Version:      1.0
+Version:      1.0.1
 Author:       Jason Raveling
 Author URI:   http://webunraveling.com
 License:      GPL2
