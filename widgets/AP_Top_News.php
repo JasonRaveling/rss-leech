@@ -62,7 +62,7 @@ class RSS_Leech_AP_Top_News extends WP_Widget {
 						<?php
 						}
 						?>
-						<span class="rss-leech-headline"><?php echo htmlspecialchars($headlines[$x], ENT_QUOTES | ENT_HTML5); ?></span>
+						<span class="rss-leech-headline"><?php echo htmlspecialchars_decode($headlines[$x]); ?></span>
 					</li>
 				</a>
 		  <?php } ?>
