@@ -13,6 +13,10 @@ function rss_cacher( $feedURL, $feedName, $limit, $cacheTime = 2700 ) {
 
   $cacheDir = dirname( dirname(__FILE__) )  . '/cache';
 
+  if ( ! file_exists($cacheDir) ) {
+    mkdir($cacheDir, 0777, true);
+  }
+
   if ( ! $feedURL ) {
     return 'error: rss_cacher() expects at least two arguments. No RSS source URL provided or the URL does not exist.';
   }
