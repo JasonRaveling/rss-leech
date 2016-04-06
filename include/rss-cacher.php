@@ -9,7 +9,7 @@
  *
  */
 
-function rss_cacher( $feedURL, $feedName, $limit, $cacheTime = 2700 ) {
+function rss_cacher( $feedURL, $feedName, $limit, $cacheTime = 3600 ) {
 
   $cacheDir = dirname( dirname(__FILE__) )  . '/cache';
 
@@ -38,7 +38,7 @@ function rss_cacher( $feedURL, $feedName, $limit, $cacheTime = 2700 ) {
       unlink( $cacheFile );
     }
 
-    $feed = file_get_contents( $feedURL );
+    @$feed = file_get_contents( $feedURL ); // REMOVE THE ERROR FOR NOW JRAV
 
     // match any image URL
     preg_match_all('/([http|s]+:\/\/[^\/]+.\/[^\s]+\.(jpg|jpeg|png|gif|bmp))/', $feed, $imgMatches);
