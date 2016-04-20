@@ -32,7 +32,8 @@ function register_rss_leech_css() {
     'rss-leech',
     plugins_url( '/rss-leech/include/style/css/rss-leech-style.css' ),
     array(),
-    date( 'Ymd', filemtime(dirname(__FILE__) . '/include/style/css/rss-leech-style.css') )
+    date( 'Ymd', filemtime(dirname(__FILE__) . '/include/style/css/rss-leech-style.css') ),
+		true
   );
 	wp_enqueue_style( 'rss-leech' );
 }
