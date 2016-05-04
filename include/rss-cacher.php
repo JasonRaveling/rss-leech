@@ -4,7 +4,7 @@
  * Keep from angering the RSS host. Go unoticed as long as possible like any
  * good parasite would.
  *
- * We will grab the feed every 45 minutes. We hope that will sustain us without
+ * We will grab the feed every 60 minutes. Hopefully that will sustain us without
  * angering our host.
  *
  */
@@ -32,13 +32,13 @@ function rss_cacher( $feedURL, $feedName, $limit, $cacheTime = 3600 ) {
     return 'error: rss_cacher expects cacheTime to be integer.';
   }
 
-  if ( !file_exists($cacheFile) || filesize($cacheFile) <= 1  || filemtime($cacheFile) < (time() - $cacheTime) ) {
+  if ( ! file_exists($cacheFile) || filesize($cacheFile) <= 1  || filemtime($cacheFile) < (time() - $cacheTime) ) {
 
     if ( file_exists($cacheFile) && is_file($cacheFile) ) {
       unlink( $cacheFile );
     }
 
-    @$feed = file_get_contents( $feedURL ); // REMOVE THE ERROR FOR NOW JRAV
+    @$feed = file_get_contents( $feedURL ); // Ignoring errors for now
 
     // match any image URL
     preg_match_all('/([http|s]+:\/\/[^\/]+.\/[^\s]+\.(jpg|jpeg|png|gif|bmp))/', $feed, $imgMatches);
